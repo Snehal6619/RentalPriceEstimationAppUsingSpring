@@ -14,7 +14,7 @@
 
     <style>
       body {
-        background-image: url("../images/housebg.png");
+        background-image: url(<%=request.getContextPath()%>/resources/images/housebg.png");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -109,6 +109,7 @@
 
                 <button type="reset" class="btn btn-secondary">Cancel</button>
               </div>
+              <div id="msg" class="text-danger mt-2"></div>
             </form>
           </div>
         </div>
@@ -176,42 +177,30 @@ password:password
 
 // fetch API
 
-fetch("loginUser",
-{
-method:"POST",
+fetch("login",{
+	      method:"POST",
+	      headers:{
+	         "Content-Type":"application/json"
+	      },
+	      body: JSON.stringify(user)
+	   }).
+	  then((res)=>res.text())
+	 .then(msg => {
 
-headers:
-{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify(user)
-
-})
-
-.then(response=>response.text())
-
-.then(data=>{
-
-if(data=="success")
-{
-alert("Login Successful");
-
-// redirect dashboard
-window.location.href="userDashboard";
-
-}
-else
-{
-alert("Invalid Username or Password");
-}
-
-})
-
-.catch(error=>{
-alert("Error : "+error);
-});
-
+	      if(msg === "User Login Success"){
+	          window.location.href="${pageContext.request.contextPath}/user/userDashboard";
+	      }
+	      else if(msg ==="Admin Login Success")
+	    	  {
+	    	  window.location.href="${pageContext.request.contextPath}/admin/adminDashboard";
+	    	  }
+	      else{
+	          document.getElementById("msg").innerHTML = msg;
+	      }
+	   }).
+	catch((err)=>{
+		console.log(err);
+	});
 return false;
 
 }

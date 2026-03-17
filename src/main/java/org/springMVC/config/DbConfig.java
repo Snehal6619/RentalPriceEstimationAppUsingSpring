@@ -14,7 +14,7 @@ public class DbConfig {
 		ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		ds.setUsername("root");
 		ds.setPassword("@123456789");
-		ds.setUrl("jdbc:mysql://localhost:3306/SpringSecurity");
+		ds.setUrl("jdbc:mysql://localhost:3306/RentalPriceApp");
 		return ds;		
 	}
 	

@@ -57,7 +57,7 @@
         <!-- Left Image -->
         <div class="col-md-6 text-center">
           <img
-             src="<%= request.getContextPath()%>/resources/img/contactImg.avif"
+             src="<%= request.getContextPath()%>/resources/img/contactImg.jpeg"
             class="img-fluid"
             style="max-width: 500px"
             alt="Contact Image"

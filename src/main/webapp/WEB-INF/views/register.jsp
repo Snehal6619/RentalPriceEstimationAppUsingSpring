@@ -14,7 +14,7 @@
 
 <style>
 body {
-	background-image: url("../images/housebg.png");
+        background-image: url(<%=request.getContextPath()%>/resources/images/housebg.png");
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -79,7 +79,7 @@ body {
 					<div class="mb-3">
 						<label class="form-label">Enter Your Name</label> <input
 							type="text" class="form-control" autofocus="autofocus" required
-							id="name" />
+							id="username" />
 					</div>
 
 					<div class="mb-3">
@@ -122,7 +122,7 @@ function validateForm(event)
 
 event.preventDefault(); // page reload stop
 
-let name=document.getElementById("name").value.trim();
+let username=document.getElementById("username").value.trim();
 let email=document.getElementById("email").value.trim();
 let contact=document.getElementById("contact").value.trim();
 let password=document.getElementById("password").value.trim();
@@ -130,13 +130,13 @@ let password=document.getElementById("password").value.trim();
 
 // Validation
 
-if(name=="")
+if(username=="")
 {
 alert("Name is required");
 return false;
 }
 
-if(name.length<3)
+if(username.length<3)
 {
 alert("Name must be at least 3 characters");
 return false;
@@ -168,7 +168,7 @@ return false;
 // Object create
 
 let user={
-name:name,
+username:username,
 email:email,
 contact:contact,
 password:password
@@ -176,32 +176,23 @@ password:password
 
 
 // Fetch API
-
-fetch("saveUser",
-{
-method:"POST",
-
-headers:
-{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify(user)
-
-})
-
-.then(response=>response.text())
-.then(data=>{
-alert(data);
-document.getElementById("regForm").reset();
-})
-
-.catch(error=>{
-alert("Error : "+error);
-});
-
+		 fetch("register",{
+		      method:"POST",
+		      headers:{
+		         "Content-Type":"application/json"
+		      },
+		      body: JSON.stringify(user)
+		   })
+		   .then(res => res.text())
+		   .then(msg => {
+			alert(msg);
+			console.log(msg);
+		   }).
+		   catch((err)=>{
+				console.log(err);
+			   alert(err);
+		   });
 return false;
-
 }
 
 </script>

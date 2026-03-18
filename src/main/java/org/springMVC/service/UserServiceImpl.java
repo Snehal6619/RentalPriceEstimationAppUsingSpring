@@ -1,6 +1,7 @@
 package org.springMVC.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springMVC.model.User;
 import org.springMVC.repo.UserRepoImpl;
@@ -96,4 +97,25 @@ public class UserServiceImpl implements UserService{
 		}
 		return userRepo.search(id);
 	}
+	
+	@Override
+	public List<Map<String,Object>> getStates(){
+		return userRepo.getStates();
+		}
+
+	@Override
+		public List<Map<String,Object>> getCities(int statecode){
+		return userRepo.getCities(statecode);
+		}
+
+	@Override
+		public List<Map<String,Object>> getLocations(int cid){
+		return userRepo.getLocations(cid);
+		}
+
+	@Override
+		public int saveProperty(Map<String,Object> data){
+		return userRepo.saveProperty(data);
+		}
+
 }

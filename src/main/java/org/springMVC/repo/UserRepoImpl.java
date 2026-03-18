@@ -3,6 +3,7 @@ package org.springMVC.repo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springMVC.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,54 +13,46 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepoImpl implements UserRepo{
+public class UserRepoImpl implements UserRepo {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	
+
 	public User findByUserName(String username) {
-		
-		List<User> list = jdbcTemplate.query("select * from user where username=?",//check krt username present ahe ka nahi
-				new BeanPropertyRowMapper<>(User.class),
-				username);
-		if(list.isEmpty())
-		{
+
+		List<User> list = jdbcTemplate.query("select * from user where username=?", // check krt username present ahe ka
+																					// nahi
+				new BeanPropertyRowMapper<>(User.class), username);
+		if (list.isEmpty()) {
 			return null;
-		}
-		else {
-			return list.get(0);   //0-user 1-password
+		} else {
+			return list.get(0); // 0-user 1-password
 		}
 	}
 
 	@Override
 	public boolean existsByUsername(String username) {
 		String sql = "SELECT COUNT(*) FROM user WHERE username = ?";
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, username);
-        return count != null && count > 0;
+		Integer count = jdbcTemplate.queryForObject(sql, Integer.class, username);
+		return count != null && count > 0;
 	}
 
 	@Override
 	public int save(User user) {
-		
-		return jdbcTemplate.update(
-		        "insert into user(username,email,contact,password) values(?,?,?,?)",
-		        user.getUsername(),
-		        user.getEmail(),
-		        user.getContact(),
-		        user.getPassword()
-		    );
 
-		
+		return jdbcTemplate.update("insert into user(username,email,contact,password) values(?,?,?,?)",
+				user.getUsername(), user.getEmail(), user.getContact(), user.getPassword());
+
 	}
 
 	@Override
 	public List<User> display() {
-		
-		List<User> list=jdbcTemplate.query("select * from user where role='USER'",new RowMapper<User>() {
+
+		List<User> list = jdbcTemplate.query("select * from user where role='USER'", new RowMapper<User>() {
 
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				User e=new User();
+				User e = new User();
 				e.setId(rs.getInt(1));
 				e.setUsername(rs.getString(2));
 				e.setEmail(rs.getString(3));
@@ -74,18 +67,18 @@ public class UserRepoImpl implements UserRepo{
 
 	@Override
 	public void delete(int id) {
-		
-		 jdbcTemplate.update("delete from user where id=?",id);
+
+		jdbcTemplate.update("delete from user where id=?", id);
 	}
 
 	@Override
 	public List<User> search(int id) {
-		
-		List<User> list=jdbcTemplate.query("select * from user where id=?",new RowMapper<User>() {
+
+		List<User> list = jdbcTemplate.query("select * from user where id=?", new RowMapper<User>() {
 
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				User e=new User();
+				User e = new User();
 				e.setId(rs.getInt(1));
 				e.setUsername(rs.getString(2));
 				e.setEmail(rs.getString(3));
@@ -94,8 +87,31 @@ public class UserRepoImpl implements UserRepo{
 				e.setRole(rs.getString(6));
 				return e;
 			}
-		},id);   //query(sql,rowMapper,paramter(?)
+		}, id); // query(sql,rowMapper,paramter(?)
 		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> getStates() {
+		return jdbcTemplate.queryForList("select * from state");
+	}
+
+	@Override
+	public List<Map<String, Object>> getCities(int statecode) {
+		return jdbcTemplate.queryForList("select * from city where statecode=?", statecode);
+	}
+
+	@Override
+	public List<Map<String, Object>> getLocations(int cid) {
+		return jdbcTemplate.queryForList("select * from location where cid=?", cid);
+	}
+
+	@Override
+	public int saveProperty(Map<String, Object> d) {
+		return jdbcTemplate.update(
+				"insert into property(locationcode,area_sqft,bedrooms,bathrooms,parking,metro_distance) values(?,?,?,?,?,?)",
+				d.get("locationcode"), d.get("area_sqft"), d.get("bedrooms"), d.get("bathrooms"), d.get("parking"),
+				d.get("metro_distance"));
 	}
 
 }

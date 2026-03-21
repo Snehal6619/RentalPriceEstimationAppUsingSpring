@@ -1,6 +1,8 @@
 package org.springMVC.controller;
 
+import org.springMVC.model.Inquiry;
 import org.springMVC.model.User;
+import org.springMVC.service.AdminService;
 import org.springMVC.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,8 @@ public class HomeController {
 	@Autowired
 	UserServiceImpl userService;
 
+	@Autowired
+	AdminService adminService;
     @GetMapping("/")
     public String ind() {
         return "index";
@@ -62,6 +66,11 @@ public class HomeController {
 	 { 
 		 return userService.loginUser(user,session);
 	}
-	 
+	
+	 @ResponseBody
+	    @PostMapping("/saveInquiry")
+	    public String saveInquiry(@RequestBody Inquiry inquiry) {
+	        return adminService.saveInquiry(inquiry);
+	    }
 }
 //http://localhost:7000/SpringSecurityLoginApp/

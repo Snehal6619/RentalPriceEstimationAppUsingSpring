@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.springMVC.model.Property;
 import org.springMVC.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -113,5 +114,30 @@ public class UserRepoImpl implements UserRepo {
 				d.get("locationcode"), d.get("area_sqft"), d.get("bedrooms"), d.get("bathrooms"), d.get("parking"),
 				d.get("metro_distance"));
 	}
+	@Override
+	public List<Property> getAllProperties() {
 
+	    String sql = "SELECT * FROM property";
+
+	    return jdbcTemplate.query(sql, (rs, rowNum) -> {
+
+	        Property p = new Property();
+
+	        p.setProperty_id(rs.getInt("property_id"));
+	        p.setLocationcode(rs.getInt("locationcode"));
+
+	        p.setArea_sqft(rs.getFloat("area_sqft"));
+	        p.setBedrooms(rs.getInt("bedrooms"));
+	        p.setBathrooms(rs.getInt("bathrooms"));
+
+	        // parking (0/1 handle)
+	        p.setParking(rs.getBoolean("parking"));
+
+	        p.setMetro_distance(rs.getFloat("metro_distance"));
+
+	        p.setPrice(rs.getInt("price"));
+
+	        return p;
+	    });
+	}
 }

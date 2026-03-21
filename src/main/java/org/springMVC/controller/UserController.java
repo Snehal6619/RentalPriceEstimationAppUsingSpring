@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springMVC.model.Property;
 import org.springMVC.model.User;
 import org.springMVC.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,14 @@ public class UserController {
 	  		    session.invalidate(); // session destroy
 	  		    return "redirect:/lg"; // login page
 	  		}
+	  		
+	  		//predict
+	  		@PostMapping("/predict")
+	  		@ResponseBody
+	  		public Property predict(@RequestBody Property property){
+	  		    return userService.predictPrice(property);
+	  		}
+	
 }
 
 

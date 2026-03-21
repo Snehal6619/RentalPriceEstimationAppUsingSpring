@@ -1,7 +1,10 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
 String user = (String) session.getAttribute("un");
+String ue = (String) session.getAttribute("ue");
+String uc = (String) session.getAttribute("uc");
 if (user == null) {
 	response.sendRedirect("lg");
 }
@@ -23,8 +26,8 @@ if (user == null) {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-black">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <marquee>Welcome ${un}</marquee>
+        <a class="navbar-brand" href="">
+            <marquee class="text-warning fw-bold">Welcome ${un}</marquee>
         </a>
 
         <div class="ms-auto">
@@ -43,24 +46,23 @@ if (user == null) {
                 <form id="userProfileForm">
                     <div class="mb-3">
                         <label>Username</label>
-                        <input type="text" id="username" class="form-control bg-dark text-light border-light" readonly value="<%= session.getAttribute("un") %>">
+                       <%--  <input type="text" id="username" class="form-control bg-dark text-light border-light" readonly value="<%= session.getAttribute("un") %>"> --%>
+                       <h3><%= session.getAttribute("un") %></h3>
                     </div>
 
                     <div class="mb-3">
                         <label>Email</label>
-                        
-                        <input type="email" id="email" class="form-control bg-dark text-light border-light">
-
+                                <h3><%= session.getAttribute("ue") %></h3>
+                       
                     </div>
 
                     <div class="mb-3">
                         <label>Phone</label>
-                        <input type="text" id="phone" class="form-control bg-dark text-light border-light">
-                    </div>
+                   		        <h3><%= session.getAttribute("uc") %></h3>
+                   	 </div>
 
                     <div class="text-center mt-3">
-                       <!-- <button type="button" class="btn btn-primary" onclick="updateProfile()">Update</button> -->
-                       <!--  <button type="button" class="btn btn-secondary" onclick="hideProfile()">Close</button> -->
+
                         <button type="button" class="btn btn-secondary btn-lg" onclick="hideProfile()">Close</button>
                     </div>
                 </form>
@@ -133,9 +135,13 @@ if (user == null) {
 </div>
 
 <div class="mt-4 text-center">
-<button type="button" class="btn btn-primary me-2" onclick="saveProperty()">Predict</button>
 <button type="reset" class="btn btn-secondary">Clear</button>
+
+<button type="button" class="btn btn-success" onclick="predictRent()">Predict Rent</button>
+
 </div>
+
+<h3 id="result" class="text-center mt-4 text-warning"></h3>
 
 </form>
 
@@ -391,43 +397,118 @@ locationSelect.appendChild(op);
 function showProfile() {
     document.getElementById("addForm").classList.add("d-none");
     document.getElementById("profileForm").classList.remove("d-none");
-
-    fetch("/RentalPriceEstimationApp/user/profile")
-    .then(res => res.json())
-    .then(user => {
-        if(user){
-            document.getElementById("username").value = user.username;
-            document.getElementById("email").value = user.email;
-            document.getElementById("phone").value = user.phone; // <--- assign phone
-        }
-    })
-    .catch(err => console.log("Error fetching profile: " + err));
 }
 
 function hideProfile() {
     document.getElementById("profileForm").classList.add("d-none");
     document.getElementById("addForm").classList.remove("d-none");
 }
-
-function updateProfile() {
-    let profile = {
-        username: document.getElementById("username").value,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("phone").value
-    };
-
-    fetch("/RentalPriceEstimationApp/user/updateProfile", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(profile)
-    })
-    .then(res => res.text())
-    .then(msg => alert(msg))
-    .catch(err => alert("Error: " + err));
-}
-
-// === Existing property form functions here (loadStates, loadC, loadL, saveProperty, etc.) ===
 </script>
+<!-- predict rent -->
+<script type="text/javascript">
 
+function predictRent(){
+
+
+	let state = document.getElementById("ssl").value;
+	let city = document.getElementById("cs").value;
+	let location = document.getElementById("cl").value;
+	let area = document.getElementById("area_sqft").value;
+	let bed = document.getElementById("bedrooms").value;
+	let bath = document.getElementById("bathrooms").value;
+	let metro = document.getElementById("metro_distance").value;
+	let parking = document.getElementById("parking").value;
+
+	// ✅ VALIDATION
+
+	if(state==""){
+	alert("Please select state");
+	return;
+	}
+
+	if(city==""){
+	alert("Please select city");
+	return;
+	}
+
+	if(location==""){
+	alert("Please select location");
+	return;
+	}
+
+	if(area=="" || area<=0){
+	alert("Enter valid area (sq ft)");
+	return;
+	}
+
+	if(area > 5000){
+	alert("Area too large (Max 5000 allowed)");
+	return;
+	}
+
+	if(bed=="" || bed<=0){
+	alert("Enter valid bedrooms");
+	return;
+	}
+
+	if(bed > 10){
+	alert("Max 10 bedrooms allowed");
+	return;
+	}
+
+	if(bath=="" || bath<=0){
+	alert("Enter valid bathrooms");
+	return;
+	}
+
+	if(bath > 10){
+	alert("Max 10 bathrooms allowed");
+	return;
+	}
+
+	if(metro=="" || metro<0){
+	alert("Enter valid metro distance");
+	return;
+	}
+
+	if(metro > 50000){
+	alert("Metro distance too high");
+	return;
+	}
+
+	if(parking==""){
+	alert("Select parking option");
+	return;
+	}
+
+
+	let property={
+	locationcode: Number(location),
+	area_sqft: Number(area),
+	bedrooms: Number(bed),
+	bathrooms: Number(bath),
+	metro_distance: Number(metro),
+	parking: parking === "true"
+	};
+
+
+	fetch("/RentalPriceEstimationApp/user/predict",{
+	method:"POST",
+	headers:{
+	"Content-Type":"application/json"
+	},
+	body:JSON.stringify(property)
+	})
+	.then(res=>res.json())
+	.then(data=>{
+	document.getElementById("result").innerText =
+	"Predicted Rent ₹ : " + data.price;
+	})
+	.catch(err=>{
+	alert("Error : "+err);
+	});
+
+	}
+</script>
 </body>
 </html>

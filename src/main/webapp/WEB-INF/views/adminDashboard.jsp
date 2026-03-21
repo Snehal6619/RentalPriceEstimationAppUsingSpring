@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -15,10 +17,6 @@ if (user == null) {
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-<!-- SweetAlert2 Library -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-dark text-light">
 	<!-- Navbar -->
@@ -33,8 +31,8 @@ if (user == null) {
 			<!-- Sidebar -->
 			<div class="col-md-3 col-lg-2 bg-secondary min-vh-100 p-3">
 				<h5 class="text-center mb-4">Menu</h5>
-				<marquee behavior="" direction="" scrollamount="4">
-					Welcome ${un} </marquee>
+				<marquee direction="left" scrollamount="6" behavior="scroll"
+					class="text-warning fw-bold"> Welcome ${un} </marquee>
 				<div class="nav flex-column">
 					<!-- add property -->
 					<button class="btn btn-outline-light mb-2"
@@ -46,110 +44,112 @@ if (user == null) {
 					<button class="btn btn-outline-light mb-2"
 						onclick="showSection('addloc')">Add location</button>
 					<button class="btn btn-outline-light mb-2"
-						onclick="showSection('searchForm'); loadProperty();">Display Property</button>
-					<button class="btn btn-outline-light"
+						onclick="showSection('searchForm'); loadProperty();">Display
+						Property</button>
+					<button class="btn btn-outline-light mb-2"
 						onclick="(showSection('displayData'), display());">
 						Display User</button>
+
+					<button class="btn btn-outline-light "
+						onclick="showSection('displayInquery');displayInquery();">View
+						Inquiry</button>
+						
 					<a class="btn btn-danger mt-5" href="logout">Log Out</a>
 				</div>
 			</div>
 			<!-- Main Content -->
 			<div class="col-md-9 col-lg-10 p-4">
-    <div id="addForm" class="section">
-    <div class="row align-items-center">
-        <div class="container mt-5 ">
+				<div id="addForm" class="section">
+					<div class="row align-items-center">
+						<div class="container mt-5 ">
 
-            <h3 class="text-light mb-4">Add Property</h3>
+							<h3 class="text-light mb-4">Add Property</h3>
 
-            <!-- STATE -->
-            <div class="mb-3">
-                <label class="form-label text-light" >Select State</label>
-                <select id="ssl" onchange="loadC()" 
-                        class="form-select bg-dark text-light border-light">
-                    <option value="">Select State</option>
-                </select>
-            </div>
+							<!-- STATE -->
+							<div class="mb-3">
+								<label class="form-label text-light">Select State</label> <select
+									id="ssl" onchange="loadC()"
+									class="form-select bg-dark text-light border-light">
+									<option value="">Select State</option>
+								</select>
+							</div>
 
-            <!-- CITY -->
-            <div class="mb-3">
-                <label class="form-label text-light">Select City</label>
-                <select id="cs" onchange="loadL()" 
-                        class="form-select bg-dark text-light border-light">
-                    <option value="">Select City</option>
-                </select>
-            </div>
+							<!-- CITY -->
+							<div class="mb-3">
+								<label class="form-label text-light">Select City</label> <select
+									id="cs" onchange="loadL()"
+									class="form-select bg-dark text-light border-light">
+									<option value="">Select City</option>
+								</select>
+							</div>
 
-            <!-- LOCATION -->
-            <div class="mb-3">
-                <label class="form-label text-light">Select Location</label>
-                <select id="cl" 
-                        class="form-select bg-dark text-light border-light">
-                    <option value="">Select Location</option>
-                </select>
-            </div>
+							<!-- LOCATION -->
+							<div class="mb-3">
+								<label class="form-label text-light">Select Location</label> <select
+									id="cl" class="form-select bg-dark text-light border-light">
+									<option value="">Select Location</option>
+								</select>
+							</div>
 
-            <!-- AREA -->
-            <div class="mb-3">
-                <label class="form-label text-light">Area (sq ft)</label>
-                <input type="number" id="area_sqft" 
-                       class="form-control bg-dark text-light border-light" >
-            </div>
+							<!-- AREA -->
+							<div class="mb-3">
+								<label class="form-label text-light">Area (sq ft)</label> <input
+									type="number" id="area_sqft"
+									class="form-control bg-dark text-light border-light">
+							</div>
 
-            <!-- BEDROOMS -->
-            <div class="mb-3">
-                <label class="form-label text-light">Bedrooms</label>
-                <input type="number" id="bedrooms" 
-                       class="form-control bg-dark text-light border-light">
-            </div>
+							<!-- BEDROOMS -->
+							<div class="mb-3">
+								<label class="form-label text-light">Bedrooms</label> <input
+									type="number" id="bedrooms"
+									class="form-control bg-dark text-light border-light">
+							</div>
 
-            <!-- BATHROOMS -->
-            <div class="mb-3">
-                <label class="form-label text-light">Bathrooms</label>
-                <input type="number" id="bathrooms" 
-                       class="form-control bg-dark text-light border-light">
-            </div>
+							<!-- BATHROOMS -->
+							<div class="mb-3">
+								<label class="form-label text-light">Bathrooms</label> <input
+									type="number" id="bathrooms"
+									class="form-control bg-dark text-light border-light">
+							</div>
 
-            <!-- PARKING -->
-            <div class="mb-3">
-                <label class="form-label text-light">Parking</label>
-                <select id="parking" 
-                        class="form-select bg-dark text-light border-light">
-                    <option value="">Select</option>
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
-            </div>
+							<!-- PARKING -->
+							<div class="mb-3">
+								<label class="form-label text-light">Parking</label> <select
+									id="parking"
+									class="form-select bg-dark text-light border-light">
+									<option value="">Select</option>
+									<option value="true">Yes</option>
+									<option value="false">No</option>
+								</select>
+							</div>
 
-            <!-- METRO -->
-            <div class="mb-3">
-                <label class="form-label text-light">Metro Distance (Meter)</label>
-                <input type="number" id="metro_distance" 
-                       class="form-control bg-dark text-light border-light">
-            </div>
+							<!-- METRO -->
+							<div class="mb-3">
+								<label class="form-label text-light">Metro Distance
+									(Meter)</label> <input type="number" id="metro_distance"
+									class="form-control bg-dark text-light border-light">
+							</div>
 
-            <!-- PRICE -->
-            <div class="mb-3">
-                <label class="form-label text-light">Price (₹)</label>
-                <input type="number" id="price" 
-                       class="form-control bg-dark text-light border-light">
-            </div>
+							<!-- PRICE -->
+							<div class="mb-3">
+								<label class="form-label text-light">Price (₹)</label> <input
+									type="number" id="price"
+									class="form-control bg-dark text-light border-light">
+							</div>
 
-            <!-- BUTTONS -->
-            <button type="button" onclick="saveProperty()" 
-                    class="btn btn-outline-primary mt-3 me-3">
-                Add Property
-            </button>
+							<!-- BUTTONS -->
+							<button type="button" onclick="saveProperty()"
+								class="btn btn-outline-primary mt-3 me-3">Add Property
+							</button>
 
-            <button type="button" onclick="clearForm()" 
-                    class="btn btn-outline-danger mt-3">
-                Clear
-            </button>
+							<button type="button" onclick="clearForm()"
+								class="btn btn-outline-danger mt-3">Clear</button>
 
-            <p id="msg" class="text-success mt-3"></p>
+							<p id="msg" class="text-success mt-3"></p>
 
-        </div>
-    </div>
-</div>
+						</div>
+					</div>
+				</div>
 
 
 				<!-- add state  -->
@@ -184,89 +184,91 @@ if (user == null) {
 				</div>
 				<!-- add city  -->
 				<div id="addcity" class="section mt-5 d-none">
-	<div class="overlay">
-		<div class="container flex-grow-1 d-flex justify-content-center align-items-center">
-			<div class="col-md-4">
-				<div class="card shadow p-4">
-					<h3 class="text-center mb-4">Add City</h3>
+					<div class="overlay">
+						<div
+							class="container flex-grow-1 d-flex justify-content-center align-items-center">
+							<div class="col-md-4">
+								<div class="card shadow p-4">
+									<h3 class="text-center mb-4">Add City</h3>
 
-					<form id="cityForm">
+									<form id="cityForm">
 
-						<div class="mb-3">
-							<label class="form-label">Select State</label>
-							<select id="stateSelectCity" name="statecode" class="form-control" required>
-								<option value="">Select State</option>
-							</select>
+										<div class="mb-3">
+											<label class="form-label">Select State</label> <select
+												id="stateSelectCity" name="statecode" class="form-control"
+												required>
+												<option value="">Select State</option>
+											</select>
+										</div>
+
+										<div class="mb-3">
+											<label class="form-label">City Name</label> <input
+												type="text" class="form-control" id="cityname"
+												placeholder="Enter city name" required />
+										</div>
+
+										<div class="d-flex">
+											<button type="submit" class="btn btn-primary me-3">Add</button>
+											<button type="reset" class="btn btn-secondary">Cancel</button>
+										</div>
+
+									</form>
+
+								</div>
+							</div>
 						</div>
-
-						<div class="mb-3">
-							<label class="form-label">City Name</label>
-							<input type="text" class="form-control" id="cityname"
-								placeholder="Enter city name" required />
-						</div>
-
-						<div class="d-flex">
-							<button type="submit" class="btn btn-primary me-3">Add</button>
-							<button type="reset" class="btn btn-secondary">Cancel</button>
-						</div>
-
-					</form>
-
+					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-</div>
 				<!-- add location  -->
 				<div id="addloc" class="section mt-5 d-none">
-	<div class="overlay">
-		<div class="container flex-grow-1 d-flex justify-content-center align-items-center">
-			<div class="col-md-4">
-				<div class="card shadow p-4">
+					<div class="overlay">
+						<div
+							class="container flex-grow-1 d-flex justify-content-center align-items-center">
+							<div class="col-md-4">
+								<div class="card shadow p-4">
 
-					<h3 class="text-center mb-4">Add Location</h3>
+									<h3 class="text-center mb-4">Add Location</h3>
 
-					<form>
+									<form>
 
-						<div class="mb-3">
-							<label class="form-label">Select State</label>
-							<select id="stateSelectLocation" onchange="loadCities()" class="form-control">
-								<option value="">Select State</option>
-							</select>
+										<div class="mb-3">
+											<label class="form-label">Select State</label> <select
+												id="stateSelectLocation" onchange="loadCities()"
+												class="form-control">
+												<option value="">Select State</option>
+											</select>
+										</div>
+
+										<div class="mb-3">
+											<label class="form-label">Select City</label> <select
+												id="citySelect" name="cityid" class="form-control">
+												<option value="">Select City</option>
+											</select>
+										</div>
+
+										<div class="mb-3">
+											<label class="form-label">Location Name</label> <input
+												type="text" id="locationname" class="form-control"
+												placeholder="Enter location name">
+										</div>
+
+										<div class="d-flex">
+											<button type="button" onclick="saveLocation()"
+												class="btn btn-primary me-3">Add</button>
+
+											<button type="reset" class="btn btn-secondary">
+												Cancel</button>
+										</div>
+
+										<p id="msg" class="mt-3 text-center"></p>
+
+									</form>
+
+								</div>
+							</div>
 						</div>
-
-						<div class="mb-3">
-							<label class="form-label">Select City</label>
-							<select id="citySelect" name="cityid" class="form-control">
-								<option value="">Select City</option>
-							</select>
-						</div>
-
-						<div class="mb-3">
-							<label class="form-label">Location Name</label>
-							<input type="text" id="locationname" class="form-control"
-								placeholder="Enter location name">
-						</div>
-
-						<div class="d-flex">
-							<button type="button" onclick="saveLocation()" class="btn btn-primary me-3">
-								Add
-							</button>
-
-							<button type="reset" class="btn btn-secondary">
-								Cancel
-							</button>
-						</div>
-
-						<p id="msg" class="mt-3 text-center"></p>
-
-					</form>
-
+					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-</div>
 				<!-- Search -->
 				<div id="searchForm" class="section d-none">
 					<div class="container mt-5">
@@ -280,7 +282,8 @@ if (user == null) {
 									placeholder="Enter city" />
 							</div>
 							<div class="col-md-2 d-flex align-items-end">
-								<button type="button" onclick="searchProperty()" class="btn btn-primary w-100">Search</button>
+								<button type="button" onclick="searchProperty()"
+									class="btn btn-primary w-100">Search</button>
 							</div>
 						</div>
 						<!-- Property Table -->
@@ -302,39 +305,25 @@ if (user == null) {
 								</tr>
 							</thead>
 							<tbody id="propertyTable"></tbody>
-							<!-- <tbody>
-								<tr>
-									<td>1</td>
-									<td>Maharashtra</td>
-									<td>Pune</td>
-									<td>Hinjewadi</td>
-									<td>950</td>
-									<td>2</td>
-									<td>2</td>
-									<td>Yes</td>
-									<td>1.5 km</td>
-									<td>₹18,000</td>
-									<td><a href="updateProperty.jsp?id=1"
-										class="btn btn-warning btn-sm">Update</a> <a href="#"
-										class="btn btn-danger btn-sm">Delete</a></td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Maharashtra</td>
-									<td>Mumbai</td>
-									<td>Andheri</td>
-									<td>600</td>
-									<td>1</td>
-									<td>1</td>
-									<td>No</td>
-									<td>0.8 km</td>
-									<td>₹25,000</td>
-									<td><a href="updateProperty.jsp?id=2"
-										class="btn btn-warning btn-sm">Update</a> <a href="#"
-										class="btn btn-danger btn-sm">Delete</a></td>
-								</tr> 
-							</tbody>-->
 						</table>
+					</div>
+				</div>
+				<!--Display inquery  -->
+				<div id="displayInquery" class="section d-none">
+					<div class="container mt-5">
+						<h2 class="mb-4">Display Inquiry</h2>
+						<table class="table table-dark table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Email</th>
+									<th>Message</th>
+								</tr>
+							</thead>
+							<tbody id="tbb">
+							</tbody>
+							</table>
 					</div>
 				</div>
 				<!-- Display User -->
@@ -360,6 +349,69 @@ if (user == null) {
 			</div>
 		</div>
 	</div>
+	
+	<!-- UPDATE MODAL -->
+<div class="modal fade" id="updateModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content bg-dark text-light">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Update Property</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <input type="hidden" id="upid">
+
+        <div class="mb-2">
+          <label>Location Code</label>
+          <input type="number" id="ulocation" class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label>Area</label>
+          <input type="number" id="uarea" class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label>Bedrooms</label>
+          <input type="number" id="ubed" class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label>Bathrooms</label>
+          <input type="number" id="ubath" class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label>Parking</label>
+          <select id="upark" class="form-control">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+
+        <div class="mb-2">
+          <label>Metro Distance</label>
+          <input type="number" id="umetro" class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label>Price</label>
+          <input type="number" id="uprice" class="form-control">
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-success" onclick="updatePropertyData()">Update</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 	<script>
 	
 function showSection(sectionId) {
@@ -374,7 +426,7 @@ function showSection(sectionId) {
 	}
 	}
 	
-//display user
+/* //display user */
 function display()
 {
 	fetch("/RentalPriceEstimationApp/admin/display").	
@@ -403,11 +455,12 @@ function display()
 			let tdrole = document.createElement("td");
 			tdrole.innerText = ele.role;
 			let tdaction = document.createElement("td");
+			
 			let btn = document.createElement("button");
 			btn.innerText = "Delete";
 			btn.className="btn btn-danger btn-sm";
 			btn.onclick=function(){
-				deleteUser(ele.id);  //jya record samorcha
+				deleteUser(ele.id);  
 				};
 			
 			tdaction.appendChild(btn);
@@ -429,7 +482,7 @@ function deleteUser(id)
 {
 if(confirm("Are you sure you want to delete?"))
 {
-fetch("/RentalPriceEstimationApp/admin/delete/"+id)
+fetch("/RentalPriceEstimationApp/admin/deleteuser/"+id)
 .then(res=>res.text())
 .then(msg=>{
 alert(msg);
@@ -547,7 +600,7 @@ function loadStates(){
 	} */
 <!-- </script>
 
-	Save Properties
+	<!-- 	Save Properties -->
 	<script>	 -->
 	function loadS(){
 
@@ -598,7 +651,7 @@ function loadStates(){
 	//load location
 	function loadL(){
 let cityid=document.getElementById("cs").value;
-
+console.log("CITY ID:", cityid);
 if(cityid=="")
 {
 return;
@@ -609,7 +662,7 @@ fetch("/RentalPriceEstimationApp/admin/locations/"+cityid)
 .then(res=>res.json())
 
 .then(data=>{
-
+	 console.log("LOCATION DATA:", data);
 let locationSelect=document.getElementById("cl");
 
 locationSelect.innerHTML="<option value=''>Select Location</option>";
@@ -665,7 +718,7 @@ locationSelect.appendChild(op);
 		document.getElementById("cs").addEventListener("change",loadL);
 		});
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function loadProperty(){
 
@@ -698,7 +751,7 @@ function loadProperty(){
 	"<td>"+p.price+"</td>"+
 	"<td>" +
 	"<button class='btn btn-danger btn-sm me-2' onclick='deleteProperty("+p.property_id+")'>Delete</button>" +
-	"<button class='btn btn-success btn-sm'>Update</button>" +
+	"<button class='btn btn-success btn-sm' onclick='editProperty("+p.property_id+")'>Update</button>" +
 	"</td>";
 	tb.appendChild(tr);
 
@@ -794,8 +847,8 @@ function saveProperty(){
 
 </script>
 
-<!--search city  -->
-<script type="text/javascript">
+	<!--search city  -->
+	<script type="text/javascript">
 function searchProperty(){
 
     let city = document.getElementById("searchCity").value;
@@ -840,14 +893,14 @@ function searchProperty(){
 }
 </script>
 
-<!-- delete proprty -->
-<script type="text/javascript">
+	<!-- delete proprty -->
+	<script type="text/javascript">
 function deleteProperty(id){
 
     if(!confirm("Are you sure you want to delete?")){
         return;
     }
-
+ console.log(id);
     fetch("/RentalPriceEstimationApp/admin/delete/" + id, {
         method: "DELETE"
     })
@@ -855,13 +908,112 @@ function deleteProperty(id){
     .then(msg => {
         alert(msg);
 
-        // 👉 table refresh
         loadProperty();  
     })
     .catch(err => {
         alert("Error: " + err);
     });
 }
+
+
+//update
+function editProperty(id){
+
+    fetch("/RentalPriceEstimationApp/admin/property/" + id)
+    .then(res => res.json())
+    .then(data => {
+
+        document.getElementById("upid").value = data.property_id;
+        document.getElementById("ulocation").value = data.locationcode;
+        document.getElementById("uarea").value = data.area_sqft;
+        document.getElementById("ubed").value = data.bedrooms;
+        document.getElementById("ubath").value = data.bathrooms;
+        document.getElementById("upark").value = data.parking;
+        document.getElementById("umetro").value = data.metro_distance;
+        document.getElementById("uprice").value = data.price;
+
+        // 👇 modal open
+        let modal = new bootstrap.Modal(document.getElementById('updateModal'));
+        modal.show();
+    });
+}
+
+function updatePropertyData(){
+
+    let property = {
+        property_id: document.getElementById("upid").value,
+        locationcode: document.getElementById("ulocation").value,
+        area_sqft: document.getElementById("uarea").value,
+        bedrooms: document.getElementById("ubed").value,
+        bathrooms: document.getElementById("ubath").value,
+        parking: document.getElementById("upark").value === "true",
+        metro_distance: document.getElementById("umetro").value,
+        price: document.getElementById("uprice").value
+    };
+
+    fetch("/RentalPriceEstimationApp/admin/updateProperty", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(property)
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+
+        // modal close
+        let modal = bootstrap.Modal.getInstance(document.getElementById('updateModal'));
+        modal.hide();
+
+        loadProperty();
+    });
+}
+
+function displayInquery() {
+
+    fetch("/RentalPriceEstimationApp/admin/getAllInquiries")
+    .then((res) => {
+        return res.json();
+    })
+    .then((data) => {
+
+        console.log(data);
+
+        let tb = document.getElementById("tbb"); // correct table id
+        tb.innerHTML = ""; // clear once
+
+        data.forEach(ele => {
+
+            let tr = document.createElement("tr");
+
+            let tdid = document.createElement("td");
+            tdid.innerText = ele.id;
+
+            let tdname = document.createElement("td");
+            tdname.innerText = ele.name;
+
+            let tdemail = document.createElement("td");
+            tdemail.innerText = ele.email;
+
+            let tdmessage = document.createElement("td");
+            tdmessage.innerText = ele.message;
+
+            tr.appendChild(tdid);
+            tr.appendChild(tdname);
+            tr.appendChild(tdemail);
+            tr.appendChild(tdmessage);
+
+            tb.appendChild(tr);
+        });
+
+    })
+    .catch((err) => {
+        console.log("Error:", err);
+    });
+}
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

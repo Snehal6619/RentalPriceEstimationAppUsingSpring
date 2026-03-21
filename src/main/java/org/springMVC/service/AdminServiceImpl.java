@@ -2,6 +2,7 @@ package org.springMVC.service;
 import java.util.List;
 
 import org.springMVC.model.City;
+import org.springMVC.model.Inquiry;
 import org.springMVC.model.Location;
 import org.springMVC.model.Property;
 import org.springMVC.model.PropertyDisplay;
@@ -33,6 +34,9 @@ public class AdminServiceImpl implements AdminService {
 	public List<State> getStates() {
 		return adminRepo.getStates();
 	}
+	public List<Inquiry> getAllInquiries() {
+	    return adminRepo.getAllInquiries();
+	}
 	
 	
 	public List<City> getCities(int statecode){
@@ -43,16 +47,11 @@ public class AdminServiceImpl implements AdminService {
 				adminRepo.addCity(c);
 		}
 
-	public void addLocation(Location l){
-		adminRepo.addLocation(l);
-		}
-
 	@Override
 	public void addLocation(String locationname, int cid) {
 	
 		adminRepo.addLocation(locationname, cid);
 	}
-
 	@Override
 	public void saveLocation(Location loc) {
 		
@@ -76,7 +75,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminRepo.getAllProperty();
 	}
-
+	
 	@Override
 	public List<Property> searchProperty(String city) {
 		// TODO Auto-generated method stub
@@ -88,5 +87,23 @@ public class AdminServiceImpl implements AdminService {
 	    adminRepo.deleteProperty(id);
 	}
 
+	//update
+	 public Property getPropertyById(int id){
+	        return adminRepo.getPropertyById(id);
+	    }
+	 public boolean updateProperty(Property p){
+	        return adminRepo.updateProperty(p) > 0;
+	    }
+	 
+	 //inquery
+	 public String saveInquiry(Inquiry inquiry) {
+	        int result = adminRepo.saveInquiry(inquiry);
+
+	        if(result > 0) {
+	            return "Inquiry Submitted Successfully! Thank you for Valueable time...";
+	        } else {
+	            return "Failed to Submit Inquiry";
+	        }
+	    }
 
 }

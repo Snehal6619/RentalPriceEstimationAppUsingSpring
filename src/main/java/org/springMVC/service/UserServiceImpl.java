@@ -3,7 +3,9 @@ package org.springMVC.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springMVC.model.Property;
 import org.springMVC.model.User;
+import org.springMVC.repo.AdminRepoImpl;
 import org.springMVC.repo.UserRepoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +21,9 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserRepoImpl userRepo;
 	 
+	@Autowired
+	AdminRepoImpl adminRepo;
+	
 	@Override
 	public String regUser(User user) {
 		
@@ -51,6 +56,8 @@ public class UserServiceImpl implements UserService{
 		if(encoder.matches(user.getPassword(), userDb.getPassword()))
 		{
 			session.setAttribute("un",userDb.getUsername());
+			session.setAttribute("ue",userDb.getEmail());
+			session.setAttribute("uc",userDb.getContact());
 			if ("ADMIN".equals(userDb.getRole())) {
                 return "Admin Login Success";
             } else {
@@ -117,5 +124,49 @@ public class UserServiceImpl implements UserService{
 		public int saveProperty(Map<String,Object> data){
 		return userRepo.saveProperty(data);
 		}
+
+	//predict
+			@Override
+			public Property predictPrice(Property input){
+
+			    List<Property> list = userRepo.getAllProperties();
+
+			    int n = list.size();
+
+			    double sumPrice = 0;
+			    double sumArea = 0, sumBed = 0, sumBath = 0, sumMetro = 0, sumParking = 0;
+
+			    for(Property p : list){
+			        sumPrice += p.getPrice();
+			        sumArea += p.getArea_sqft();
+			        sumBed += p.getBedrooms();
+			        sumBath += p.getBathrooms();
+			        sumMetro += p.getMetro_distance();
+			        sumParking += (p.isParking() ? 1 : 0);
+			    }
+
+			    // Averages
+			    double avgPrice = sumPrice / n;
+			    double avgArea = sumArea / n;
+			    double avgBed = sumBed / n;
+			    double avgBath = sumBath / n;
+			    double avgMetro = sumMetro / n;
+			    double avgParking = sumParking / n;
+
+			    double parkingVal = input.isParking() ? 1 : 0;
+
+			    // Normalized calculation
+			    double predicted =
+			            avgPrice *
+			            (input.getArea_sqft() / avgArea * 0.4 +
+			             input.getBedrooms() / avgBed * 0.2 +
+			             input.getBathrooms() / avgBath * 0.15 +
+			             (avgMetro / (input.getMetro_distance()==0?1:input.getMetro_distance())) * 0.15 +
+			             parkingVal * 0.1);
+
+			    input.setPrice((int)predicted);
+
+			    return input;
+			}
 
 }

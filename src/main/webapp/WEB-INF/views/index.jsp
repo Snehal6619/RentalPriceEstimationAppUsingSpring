@@ -11,13 +11,81 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+
+    <style>
+      body.bg-slider {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        animation: bgFade 25s infinite;
+      }
+
+      @keyframes bgFade {
+        0% {
+          background-image: url("https://images.unsplash.com/photo-1560448204-e02f11c3d0e2");
+        }
+        25% {
+          background-image: url("https://images.unsplash.com/photo-1507089947368-19c1da9775ae");
+        }
+        50% {
+          background-image: url("https://images.unsplash.com/photo-1572120360610-d971b9d7767c");
+        }
+        75% {
+          background-image: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c");
+        }
+        100% {
+          background-image: url("https://images.unsplash.com/photo-1560448204-e02f11c3d0e2");
+        }
+      }
+
+      /* HERO SECTION */
+      .hero {
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: black;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+        font-weight: bold;
+        background: linear-gradient(to right, #00c6ff, #0072ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero p {
+        font-size: 18px;
+        margin-top: 10px;
+      }
+
+      .hero .btn {
+        margin-top: 20px;
+        padding: 10px 25px;
+        font-size: 18px;
+        border-radius: 30px;
+      }
+
+      .container,
+      .navbar,
+      footer {
+        position: relative;
+        z-index: 1;
+      }
+
+      footer {
+        background: rgba(0, 0, 0, 0.9);
+      }
+    </style>
   </head>
 
-  <body class="bg-light d-flex flex-column min-vh-100">
+  <body class="bg-slider d-flex flex-column min-vh-100">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="#">RentPredictApp</a>
+        <a class="navbar-brand" href="#">RentPredict</a>
 
         <button
           class="navbar-toggler"
@@ -44,40 +112,55 @@
           </ul>
 
           <div>
-            <a href="lg" class="btn btn-primary me-3">Login</a>
-            <a href="reg" class="btn btn-outline-info">Register</a>
+            <a href="lg" class="btn btn-outline-light me-2">Login</a>
+            <a  href="reg" class="btn btn-success">Register</a>
           </div>
         </div>
       </div>
     </nav>
 
-    <!-- Main Section -->
-    <div class="container mt-5 flex-grow-1">
-      <div class="row align-items-center mt-5">
-        <!-- Left Image -->
-        <div class="col-md-6 text-center">
-          <img
-            src="<%= request.getContextPath()%>/resources/img/homeImg.jpeg"
-            class="img-fluid"
-            style="max-width: 600px"
-            alt="Rental Price Estimation Logo"
-          />
-        </div>
-
-        <!-- Right Card Content -->
-        <div class="col-md-6">
-          <div class="card shadow p-4">
-            <h2 class="display-3 text-center text-black fw-bold mb-3">Welcome to Rental Price Estimation System</h2>
-          </div>
-        </div>
+    <!-- 🔥 HERO SECTION -->
+    <div class="hero">
+      <div>
+        <h1>Welcome to RentPredict</h1>
+        <p>
+          Predict rental prices smartly using advanced data & machine learning
+        </p>
+        <a  href="reg" class="btn btn-primary">Get Started</a>
       </div>
     </div>
 
-     <footer class="bg-dark text-light pt-4 mt-auto">
+    <!-- Footer -->
+    <footer class="text-light pt-4 mt-auto">
       <div class="container">
         <div class="row">
+          <div class="col-md-4">
+            <h5>RentPredict</h5>
+            <p>
+              Rental Price Estimation System helps users predict property rental
+              prices using property data and machine learning techniques.
+            </p>
+          </div>
 
-        <!-- Copyright -->
+          <div class="col-md-4">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li><a  href="home" class="text-light">Home</a></li>
+              <li><a href="about" class="text-light">About</a></li>
+              <li><a href="contact" class="text-light">Contact</a></li>
+              <li><a href="lg" class="text-light">Login</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-4">
+            <h5>Contact</h5>
+            <p>Email: rentpredict@gmail.com</p>
+            <p>Phone: +91 9876543210</p>
+            <p>Location: Pune, India</p>
+          </div>
+        </div>
+
+        <hr class="bg-light" />
         <div class="text-center pb-3">
           © 2026 Rental Price Estimation System | All Rights Reserved
         </div>

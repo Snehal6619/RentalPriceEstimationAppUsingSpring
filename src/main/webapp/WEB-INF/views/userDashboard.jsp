@@ -1,7 +1,6 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%
+<%
 String user = (String) session.getAttribute("un");
 String ue = (String) session.getAttribute("ue");
 String uc = (String) session.getAttribute("uc");
@@ -9,6 +8,7 @@ if (user == null) {
 	response.sendRedirect("lg");
 }
 %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,498 +17,385 @@ if (user == null) {
 
 <title>User Dashboard</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+<style>
+
+/* 🔥 BACKGROUND IMAGE */
+body {
+    background: url("https://images.unsplash.com/photo-1560518883-ce09059eeffa") no-repeat center center/cover;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* DARK OVERLAY */
+body::before {
+    content: "";
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background: rgba(0,0,0,0.75);
+    z-index: 0;
+}
+
+/* CONTENT ABOVE OVERLAY */
+.container, .navbar {
+    position: relative;
+    z-index: 1;
+}
+
+/* GLASS EFFECT */
+.glass {
+    background: rgba(0,0,0,0.7);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* INPUT STYLE */
+.form-control, .form-select {
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: 1px solid #ccc;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #00c6ff;
+    box-shadow: 0 0 8px #00c6ff;
+}
+
+/* HEADING */
+h3 {
+    background: linear-gradient(to right,#00c6ff,#0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* PROFILE LABEL */
+#profileForm label {
+    color: #ffffff;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* VALUE BOX */
+.profile-box {
+    background: rgba(255,255,255,0.08);
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.profile-box:hover {
+    background: rgba(0,198,255,0.25);
+    border-color: #00c6ff;
+    box-shadow: 0 0 10px #00c6ff;
+    transform: scale(1.02);
+}
+
+
+/* PROFILE CARD */
+#profileForm .glass {
+    background: rgba(0,0,0,0.8);
+    border-radius: 15px;
+}
+
+/* FORM LABEL WHITE */
+label {
+    color: #fff !important;
+    text-shadow: 0 0 5px rgba(0,0,0,0.8);
+}
+
+/* INPUT TEXT WHITE */
+.form-control,
+.form-select {
+    color: #ffffff !important;
+}
+
+/* PLACEHOLDER COLOR */
+::placeholder {
+    color: #cccccc !important;
+}
+
+/* 🔥 FIX NUMBER INPUT WHITE BACKGROUND */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    filter: invert(1);   /* arrows white */
+}
+
+/* ALL INPUT FIX */
+.form-control,
+.form-select {
+    background: rgba(0,0,0,0.7) !important;
+    color: #ffffff !important;
+    border: 1px solid #555 !important;
+}
+
+/* ON FOCUS */
+.form-control:focus,
+.form-select:focus {
+    background: rgba(0,0,0,0.9) !important;
+    color: #fff !important;
+    border-color: #00c6ff !important;
+    box-shadow: 0 0 8px #00c6ff !important;
+}
+
+/* LABEL FIX */
+label {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+/* REMOVE WHITE AUTOFILL */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px black inset !important;
+    -webkit-text-fill-color: white !important;
+}
+</style>
 
 </head>
 
-<body class="bg-dark text-light">
+<body>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-black">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">
+        <a class="navbar-brand">
             <marquee class="text-warning fw-bold">Welcome ${un}</marquee>
         </a>
 
         <div class="ms-auto">
             <button class="btn btn-success me-2" onclick="showProfile()">View Profile</button>
-            <a class="btn btn-danger " href="logout">Log Out</a>
+            <a class="btn btn-danger" href="logout">Log Out</a>
         </div>
     </div>
 </nav>
 
 
+<!-- PROFILE -->
 <div id="profileForm" class="container mt-4 d-none">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="bg-black border border-secondary rounded p-4 shadow">
-                <h3 class="mb-3 text-center">My Profile</h3>
-                <form id="userProfileForm">
-                    <div class="mb-3">
-                        <label>Username</label>
-                       <%--  <input type="text" id="username" class="form-control bg-dark text-light border-light" readonly value="<%= session.getAttribute("un") %>"> --%>
-                       <h3><%= session.getAttribute("un") %></h3>
+
+            <div class="glass p-4 shadow text-center">
+
+                <h3 class="mb-4">My Profile</h3>
+
+                <!-- USER ICON -->
+                <div class="mb-4">
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                         width="90"
+                         class="rounded-circle border border-light p-1">
+                </div>
+
+                <!-- USERNAME -->
+                <div class="mb-3 text-start">
+                    <label class="fw-bold text-light">Username</label>
+                    <div class="profile-box mt-1">
+                        <%= session.getAttribute("un") %>
                     </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label>Email</label>
-                                <h3><%= session.getAttribute("ue") %></h3>
-                       
+                <!-- EMAIL -->
+                <div class="mb-3 text-start">
+                    <label class="fw-bold text-light">Email</label>
+                    <div class="profile-box mt-1">
+                        <%= session.getAttribute("ue") %>
                     </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label>Phone</label>
-                   		        <h3><%= session.getAttribute("uc") %></h3>
-                   	 </div>
-
-                    <div class="text-center mt-3">
-
-                        <button type="button" class="btn btn-secondary btn-lg" onclick="hideProfile()">Close</button>
+                <!-- PHONE -->
+                <div class="mb-3 text-start">
+                    <label class="fw-bold text-light">Phone</label>
+                    <div class="profile-box mt-1">
+                        <%= session.getAttribute("uc") %>
                     </div>
-                </form>
+                </div>
+
+                <button class="btn btn-outline-light mt-3 w-100" onclick="hideProfile()">Close</button>
+
             </div>
+
         </div>
     </div>
 </div>
 
-<!-- FORM SECTION (UPPER POSITION) -->
+<!-- FORM -->
 <div id="addForm" class="container mt-4">
     <div class="row justify-content-center">
 
         <div class="col-md-6">
+            <div class="glass p-4 shadow">
 
-            <!-- BLACK FORM -->
-            
-<div class="bg-black border border-secondary rounded p-4 shadow">
-                <h3 class="mb-3 text-center">Fill Property details</h3>
+<h3 class="mb-4 text-center">Fill Property Details</h3>
 
-               <form>
+<form>
 
-<div class="mt-3">
+<div class="mb-3">
 <label>Select State</label>
-<select id="ssl" onchange="loadC()"  class="form-select bg-dark text-light border-secondary">
-    <option value="">-- Select State --</option>
+<select id="ssl" onchange="loadC()" class="form-select">
+<option value="">-- Select State --</option>
 </select>
 </div>
 
-<div class="mt-3">
+<div class="mb-3">
 <label>Select City</label>
-<select id="cs" onchange="loadL()"  class="form-select bg-dark text-light border-secondary">
-    <option value="">-- Select City --</option>
+<select id="cs" onchange="loadL()" class="form-select">
+<option value="">-- Select City --</option>
 </select>
 </div>
 
-<div class="mt-3">
+<div class="mb-3">
 <label>Select Location</label>
-<select id="cl"  class="form-select bg-dark text-light border-secondary">
-    <option value="">-- Select Location --</option>
+<select id="cl" class="form-select">
+<option value="">-- Select Location --</option>
 </select>
 </div>
 
-<div class="mt-3">
+<div class="mb-3">
 <label>Size (sq ft)</label>
-<input type="number" id="area_sqft"  class="form-select bg-dark text-light border-secondary">
+<input type="number" id="area_sqft" class="form-control" placeholder="Enter area">
 </div>
 
-<div class="mt-3">
+<div class="mb-3">
 <label>Bedrooms</label>
-<input type="number" id="bedrooms"  class="form-select bg-dark text-light border-secondary">
+<input type="number" id="bedrooms" class="form-control" placeholder="Enter bedrooms">
 </div>
 
-<div class="mt-3">
+<div class="mb-3">
 <label>Bathrooms</label>
-<input type="number" id="bathrooms"  class="form-select bg-dark text-light border-secondary">
+<input type="number" id="bathrooms" class="form-control" placeholder="Enter bathrooms">
 </div>
 
-<div class="mt-3">
+<div class="mb-3">
 <label>Metro Distance</label>
-<input type="number" id="metro_distance"  class="form-select bg-dark text-light border-secondary">
+<input type="number" id="metro_distance" class="form-control" placeholder="Enter distance">
 </div>
 
-<div class="mt-3">
+<div class="mb-3">
 <label>Parking</label>
-<select id="parking"  class="form-select bg-dark text-light border-secondary">
-    <option value="">-- Select --</option>
-    <option value="true">Yes</option>
-                    <option value="false">No</option>
+<select id="parking" class="form-select">
+<option value="">-- Select --</option>
+<option value="true">Yes</option>
+<option value="false">No</option>
 </select>
 </div>
 
-<div class="mt-4 text-center">
-<button type="reset" class="btn btn-secondary">Clear</button>
-
+<div class="text-center mt-4">
+<button type="reset" class="btn btn-secondary me-2">Clear</button>
 <button type="button" class="btn btn-success" onclick="predictRent()">Predict Rent</button>
-
 </div>
 
 <h3 id="result" class="text-center mt-4 text-warning"></h3>
 
 </form>
 
-            </div>
-
+</div>
         </div>
     </div>
 </div>
 
-
 <script>
 
-function showSection(sectionId) {
-	const sections=document.querySelectorAll(".section");
-	sections.forEach(sec=>{
-	sec.classList.add("d-none");
-	});
-	document.getElementById(sectionId).classList.remove("d-none");
-	if(sectionId=="addcity" || sectionId=="addloc")
-	{
-	loadStates();
-	}
-	}
-
-    // 🔥 PARKING
-    let p = document.getElementById("parking");
-    p.innerHTML = `
-        <option value=''>--Select--</option>
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-    `;
-
-});
-
-document.getElementById("stateForm").addEventListener("submit",function(event){
-	event.preventDefault();
-	let statecode=document.getElementById("statecode").value.trim();
-	let statename=document.getElementById("statename").value.trim();
-	if(statecode=="")
-	{
-	alert("statecode required");
-	return;
-	}
-	if(statename=="")
-	{
-	alert("statename required");
-	return;
-	}
-	let state={
-	statecode:statecode,
-	statename:statename
-	};
-	fetch("/RentalPriceEstimationApp/admin/savestate",{
-	method:"POST",
-	headers:{
-	"Content-Type":"application/json"
-	},
-	body:JSON.stringify(state)
-	})
-	.then(res=>res.text())
-	.then(msg=>{
-	alert(msg);
-	document.getElementById("stateForm").reset();
-	})
-	.catch(err=>{
-	alert("Error : "+err);
-	});
-	});
-</script>
-	<!-- load state -->
-	<script>	
-function loadStates(){
-	fetch("/RentalPriceEstimationApp/admin/states")
-	.then(res=>res.json())
-	.then(data=>{
-	let stateCity=document.getElementById("stateSelectCity");
-	let stateLocation=document.getElementById("stateSelectLocation");
-	stateCity.innerHTML="<option value=''>Select State</option>";
-	stateLocation.innerHTML="<option value=''>Select State</option>";
-	data.forEach(s=>{
-	let op1=document.createElement("option");
-	op1.value=s.statecode;
-	op1.text=s.statename;
-	let op2=document.createElement("option");
-	op2.value=s.statecode;
-	op2.text=s.statename;
-	stateCity.appendChild(op1);
-	stateLocation.appendChild(op2);
-	});
-	});
-	}
-	// load cities
-	function loadCities(){
-	let statecode=document.getElementById("stateSelectLocation").value;
-	if(statecode=="")
-	{
-	return;
-	}
-	fetch("/RentalPriceEstimationApp/admin/cities/"+statecode)
-	.then(res=>res.json())
-	.then(data=>{
-	let citySelect=document.getElementById("citySelect");
-	citySelect.innerHTML="<option value=''>Select City</option>";
-	data.forEach(function(c){
-	let op=document.createElement("option");
-	op.value=c.id;
-	op.textContent=c.name;
-	citySelect.appendChild(op);
-	});
-	});
-	}
-	
-	//save location
-	function saveLocation(){
-		let cityid=document.getElementById("citySelect").value;
-		let locationname=document.getElementById("locationname").value;
-		let loc={
-		cid:cityid,
-		locationname:locationname
-		};
-		fetch("/RentalPriceEstimationApp/admin/saveLocation",{
-		method:"POST",
-		headers:{
-		"Content-Type":"application/json"
-		},
-		body:JSON.stringify(loc)
-		})
-		.then(res=>res.text())
-		.then(msg=>alert(msg));
-		}
-	
-	function loadS(){
-
-		fetch("/RentalPriceEstimationApp/admin/states")
-
-		.then(res=>res.json())
-
-		.then(data=>{
-
-		let stateSelect=document.getElementById("ssl");
-
-		stateSelect.innerHTML="<option value=''>Select State</option>";
-
-		data.forEach(function(s){
-
-		let op=document.createElement("option");
-
-		op.value=s.statecode;
-		op.text=s.statename;
-
-		stateSelect.appendChild(op);
-
-		});
-
-		});
-
-		}
-	// load cities
-	function loadC(){
-	let statecode=document.getElementById("ssl").value;
-	if(statecode=="")
-	{
-	return;
-	}
-	fetch("/RentalPriceEstimationApp/admin/cities/"+statecode)
-	.then(res=>res.json())
-	.then(data=>{
-	let cs=document.getElementById("cs");
-	cs.innerHTML="<option value=''>Select City</option>";
-	data.forEach(function(c){
-	let op=document.createElement("option");
-	op.value=c.id;
-	op.textContent=c.name;
-	cs.appendChild(op);
-	});
-	});
-	}
-	//load location
-	function loadL(){
-let cityid=document.getElementById("cs").value;
-
-if(cityid=="")
-{
-return;
+// PROFILE
+function showProfile(){
+document.getElementById("addForm").classList.add("d-none");
+document.getElementById("profileForm").classList.remove("d-none");
 }
+
+function hideProfile(){
+document.getElementById("profileForm").classList.add("d-none");
+document.getElementById("addForm").classList.remove("d-none");
+}
+
+// LOAD STATES
+function loadS(){
+fetch("/RentalPriceEstimationApp/admin/states")
+.then(res=>res.json())
+.then(data=>{
+let stateSelect=document.getElementById("ssl");
+stateSelect.innerHTML="<option value=''>Select State</option>";
+data.forEach(s=>{
+let op=document.createElement("option");
+op.value=s.statecode;
+op.text=s.statename;
+stateSelect.appendChild(op);
+});
+});
+}
+
+// LOAD CITY
+function loadC(){
+let statecode=document.getElementById("ssl").value;
+if(statecode=="") return;
+
+fetch("/RentalPriceEstimationApp/admin/cities/"+statecode)
+.then(res=>res.json())
+.then(data=>{
+let cs=document.getElementById("cs");
+cs.innerHTML="<option value=''>Select City</option>";
+data.forEach(c=>{
+let op=document.createElement("option");
+op.value=c.id;
+op.textContent=c.name;
+cs.appendChild(op);
+});
+});
+}
+
+// LOAD LOCATION
+function loadL(){
+let cityid=document.getElementById("cs").value;
+if(cityid=="") return;
 
 fetch("/RentalPriceEstimationApp/admin/locations/"+cityid)
-
 .then(res=>res.json())
-
 .then(data=>{
-
 let locationSelect=document.getElementById("cl");
-
 locationSelect.innerHTML="<option value=''>Select Location</option>";
-
-data.forEach(function(l){
-
+data.forEach(l=>{
 let op=document.createElement("option");
-
 op.value=l.locationcode;
 op.textContent=l.locationname;
-
 locationSelect.appendChild(op);
-
 });
-
 });
-
-}
-	
-	//save property
-	function saveProperty(){	
-		let property={
-			    locationcode: Number(document.getElementById("cl").value),
-			    area_sqft: Number(document.getElementById("area_sqft").value),
-			    bedrooms: Number(document.getElementById("bedrooms").value),
-			    bathrooms: Number(document.getElementById("bathrooms").value),
-			    parking: document.getElementById("parking").value === "true",
-			    metro_distance: Number(document.getElementById("metro_distance").value),
-			    price: Number(document.getElementById("price").value)
-			};
-		fetch("/RentalPriceEstimationApp/admin/saveProperty",{
-		method:"POST",
-		headers:{
-		"Content-Type":"application/json"
-		},
-		body:JSON.stringify(property)
-		})
-		.then(res=>res.text())
-		.then(msg=>alert(msg));
-		};
-	// page load  even
-	/* window.onload=function(){
-	loadS();
-	document.getElementById("ssl").addEventListener("change",loadC);
-	} */
-	
-	window.addEventListener("load",function(){
-
-		loadStates(); // state for city/location form
-		loadS();      // state for property form
-		document.getElementById("stateSelectLocation").addEventListener("change",loadCities);
-		document.getElementById("ssl").addEventListener("change",loadC);
-		document.getElementById("cs").addEventListener("change",loadL);
-		});
-
-</script>
-
-
-
-<script>
-function showProfile() {
-    document.getElementById("addForm").classList.add("d-none");
-    document.getElementById("profileForm").classList.remove("d-none");
 }
 
-function hideProfile() {
-    document.getElementById("profileForm").classList.add("d-none");
-    document.getElementById("addForm").classList.remove("d-none");
-}
-</script>
-<!-- predict rent -->
-<script type="text/javascript">
+// PAGE LOAD
+window.onload=function(){
+loadS();
+};
 
+// PREDICT RENT (same logic)
 function predictRent(){
 
+let property={
+locationcode:Number(document.getElementById("cl").value),
+area_sqft:Number(document.getElementById("area_sqft").value),
+bedrooms:Number(document.getElementById("bedrooms").value),
+bathrooms:Number(document.getElementById("bathrooms").value),
+metro_distance:Number(document.getElementById("metro_distance").value),
+parking:document.getElementById("parking").value==="true"
+};
 
-	let state = document.getElementById("ssl").value;
-	let city = document.getElementById("cs").value;
-	let location = document.getElementById("cl").value;
-	let area = document.getElementById("area_sqft").value;
-	let bed = document.getElementById("bedrooms").value;
-	let bath = document.getElementById("bathrooms").value;
-	let metro = document.getElementById("metro_distance").value;
-	let parking = document.getElementById("parking").value;
+fetch("/RentalPriceEstimationApp/user/predict",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify(property)
+})
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("result").innerText="Predicted Rent ₹ : "+data.price;
+});
+}
 
-	// ✅ VALIDATION
-
-	if(state==""){
-	alert("Please select state");
-	return;
-	}
-
-	if(city==""){
-	alert("Please select city");
-	return;
-	}
-
-	if(location==""){
-	alert("Please select location");
-	return;
-	}
-
-	if(area=="" || area<=0){
-	alert("Enter valid area (sq ft)");
-	return;
-	}
-
-	if(area > 5000){
-	alert("Area too large (Max 5000 allowed)");
-	return;
-	}
-
-	if(bed=="" || bed<=0){
-	alert("Enter valid bedrooms");
-	return;
-	}
-
-	if(bed > 10){
-	alert("Max 10 bedrooms allowed");
-	return;
-	}
-
-	if(bath=="" || bath<=0){
-	alert("Enter valid bathrooms");
-	return;
-	}
-
-	if(bath > 10){
-	alert("Max 10 bathrooms allowed");
-	return;
-	}
-
-	if(metro=="" || metro<0){
-	alert("Enter valid metro distance");
-	return;
-	}
-
-	if(metro > 50000){
-	alert("Metro distance too high");
-	return;
-	}
-
-	if(parking==""){
-	alert("Select parking option");
-	return;
-	}
-
-
-	let property={
-	locationcode: Number(location),
-	area_sqft: Number(area),
-	bedrooms: Number(bed),
-	bathrooms: Number(bath),
-	metro_distance: Number(metro),
-	parking: parking === "true"
-	};
-
-
-	fetch("/RentalPriceEstimationApp/user/predict",{
-	method:"POST",
-	headers:{
-	"Content-Type":"application/json"
-	},
-	body:JSON.stringify(property)
-	})
-	.then(res=>res.json())
-	.then(data=>{
-	document.getElementById("result").innerText =
-	"Predicted Rent ₹ : " + data.price;
-	})
-	.catch(err=>{
-	alert("Error : "+err);
-	});
-
-	}
 </script>
+
 </body>
 </html>

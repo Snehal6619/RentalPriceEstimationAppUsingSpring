@@ -14,19 +14,75 @@
 
     <style>
       body {
-        background-image: url(<%=request.getContextPath()%>/resources/images/housebg.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        background: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c") no-repeat center center/cover;
+        position: relative;
       }
 
-      /* light transparent overlay */
+      /* Dark overlay */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.65);
+        z-index: 0;
+      }
+
       .overlay {
-        /* image che transparency jar kami jast kara y che asle tar he 0.3 vali value change kara y che  */
-        background-color: rgba(255, 255, 255, 0.3);
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        position: relative;
+        z-index: 1;
+      }
+
+      .container,
+      .navbar,
+      footer {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Glass Card */
+      .card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        color: white;
+      }
+
+      .card h3 {
+        font-weight: bold;
+        background: linear-gradient(to right, #00c6ff, #0072ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .form-control {
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 10px;
+      }
+
+      .form-control:focus {
+        box-shadow: 0 0 10px #00c6ff;
+        border-color: #00c6ff;
+      }
+
+      .btn-primary {
+        border-radius: 25px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .btn-primary:hover {
+        background-color: #00c6ff;
+        border-color: #00c6ff;
+      }
+
+      footer {
+        background: rgba(0, 0, 0, 0.9);
       }
     </style>
   </head>
@@ -34,60 +90,57 @@
   <body>
     <div class="overlay">
       <!-- Navbar -->
-       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="home">RentPredictApp</a>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="home">RentPredictApp</a>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="home">Home</a>
-            </li>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="home">Home</a>
+              </li>
 
-            <li class="nav-item">
-              <a class="nav-link active" href="about">About</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about">About</a>
+              </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="contact">Contact</a>
-            </li>
-          </ul>
+              <li class="nav-item">
+                <a class="nav-link" href="contact">Contact</a>
+              </li>
+            </ul>
 
-          <div>
-            <a href="lg" class="btn btn-primary me-3">Login</a>
-            <a href="reg" class="btn btn-outline-info">Register</a>
+            <div>
+              <a href="lg" class="btn btn-primary me-3">Login</a>
+              <a href="reg" class="btn btn-outline-info">Register</a>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
 
       <!-- Login Section -->
-      <div
-        class="container flex-grow-1 d-flex justify-content-center align-items-center"
-      >
+      <div class="container flex-grow-1 d-flex justify-content-center align-items-center">
         <div class="col-md-4">
           <div class="card shadow p-4">
             <h3 class="text-center mb-4">Login Here</h3>
 
-           <form id="loginForm" onsubmit="return loginUser(event)">
+            <form id="loginForm" onsubmit="return loginUser(event)">
               <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Enter username"
-                  autofocus="autofocus"
                   id="username"
-                  required="required"
+                  required
                 />
               </div>
 
@@ -97,114 +150,87 @@
                   type="password"
                   class="form-control"
                   placeholder="Enter password"
-                  required="required"
                   id="password"
+                  required
                 />
               </div>
 
-              <div class="d-flex">
-                <button type="submit" class="btn btn-primary me-5">
-                  Login
-                </button>
-
+              <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Login</button>
                 <button type="reset" class="btn btn-secondary">Cancel</button>
               </div>
-              <div id="msg" class="text-danger mt-2"></div>
+
+              <div id="msg" class="text-warning mt-2"></div>
             </form>
           </div>
         </div>
       </div>
 
       <!-- Footer -->
-     <footer class="bg-dark text-light pt-4 mt-auto">
-      <div class="container">
-        <div class="row">
-
-        <!-- Copyright -->
-        <div class="text-center pb-3">
-          © 2026 Rental Price Estimation System | All Rights Reserved
+      <footer class="text-light pt-4 mt-auto">
+        <div class="container">
+          <div class="text-center pb-3">
+            © 2026 Rental Price Estimation System | All Rights Reserved
+          </div>
         </div>
-      </div>
-    </footer>
- </div>
+      </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
+      function loginUser(event) {
+        event.preventDefault();
 
-function loginUser(event)
-{
+        let username = document.getElementById("username").value.trim();
+        let password = document.getElementById("password").value.trim();
 
-event.preventDefault(); // form reload stop
+        if (username == "") {
+          alert("Username required");
+          return false;
+        }
 
-let username=document.getElementById("username").value.trim();
-let password=document.getElementById("password").value.trim();
+        if (username.length < 3) {
+          alert("Username must be minimum 3 characters");
+          return false;
+        }
 
+        if (password == "") {
+          alert("Password required");
+          return false;
+        }
 
-// validation
+        if (password.length < 6) {
+          alert("Password must be minimum 6 characters");
+          return false;
+        }
 
-if(username=="")
-{
-alert("Username required");
-return false;
-}
+        let user = {
+          username: username,
+          password: password
+        };
 
-if(username.length<3)
-{
-alert("Username must be minimum 3 characters");
-return false;
-}
+        fetch("login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(user)
+        })
+          .then(res => res.text())
+          .then(msg => {
+            if (msg === "User Login Success") {
+              window.location.href = "${pageContext.request.contextPath}/user/userDashboard";
+            } else if (msg === "Admin Login Success") {
+              window.location.href = "${pageContext.request.contextPath}/admin/adminDashboard";
+            } else {
+              document.getElementById("msg").innerHTML = msg;
+            }
+          })
+          .catch(err => console.log(err));
 
-if(password=="")
-{
-alert("Password required");
-return false;
-}
-
-if(password.length<6)
-{
-alert("Password must be minimum 6 characters");
-return false;
-}
-
-
-// object create
-
-let user={
-username:username,
-password:password
-};
-
-
-// fetch API
-
-fetch("login",{
-	      method:"POST",
-	      headers:{
-	         "Content-Type":"application/json"
-	      },
-	      body: JSON.stringify(user)
-	   }).
-	  then((res)=>res.text())
-	 .then(msg => {
-
-	      if(msg === "User Login Success"){
-	          window.location.href="${pageContext.request.contextPath}/user/userDashboard";
-	      }
-	      else if(msg ==="Admin Login Success")
-	    	  {
-	    	  window.location.href="${pageContext.request.contextPath}/admin/adminDashboard";
-	    	  }
-	      else{
-	          document.getElementById("msg").innerHTML = msg;
-	      }
-	   }).
-	catch((err)=>{
-		console.log(err);
-	});
-return false;
-
-}
-
-</script>
+        return false;
+      }
+    </script>
   </body>
 </html>

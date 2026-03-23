@@ -11,9 +11,45 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+
+    <style>
+      body {
+        background: url("https://images.unsplash.com/photo-1560448204-e02f11c3d0e2") no-repeat center center/cover;
+        position: relative;
+      }
+
+      /* Overlay for readability */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 0;
+      }
+
+      .container,
+      .navbar,
+      footer {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Card styling */
+      .card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+      }
+
+      footer {
+        background: rgba(0, 0, 0, 0.9);
+      }
+    </style>
   </head>
 
-  <body class="bg-light d-flex flex-column min-vh-100">
+  <body class="d-flex flex-column min-vh-100">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
@@ -70,25 +106,20 @@
               The model considers various factors such as: State City Location
               Area (square feet) Number of bedrooms Number of bathrooms
               Amenities (parking, lift, security) Proximity to facilities
-              (metro, school, hospital) After training on past rental listings,
+              (metro, school, hospital). After training on past rental listings,
               the system predicts rent for new properties. This helps landlords
-              set competitive prices and tenants understand fair market value
+              set competitive prices and tenants understand fair market value.
             </p>
 
             <h5 class="mt-4">Main Features</h5>
 
             <ul>
               <li>User registration and login system</li>
-
               <li>Admin management system</li>
-
               <li>Add and manage property information</li>
-
-              <li>To develop a rental price prediction system</li>
-
-              <li>To implement Linear Regression algorithm</li>
-
-              <li>Simple and user-friendly web interface</li>
+              <li>Rental price prediction system</li>
+              <li>Linear Regression algorithm implementation</li>
+              <li>Simple and user-friendly interface</li>
             </ul>
           </div>
         </div>
@@ -96,11 +127,8 @@
     </div>
 
     <!-- Footer -->
-   <footer class="bg-dark text-light pt-4 mt-auto">
+    <footer class="text-light pt-4 mt-auto">
       <div class="container">
-        <div class="row">
-
-        <!-- Copyright -->
         <div class="text-center pb-3">
           © 2026 Rental Price Estimation System | All Rights Reserved
         </div>

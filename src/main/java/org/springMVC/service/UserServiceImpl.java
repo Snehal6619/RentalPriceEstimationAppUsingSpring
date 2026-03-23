@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
 		}
 		//ram ->user ->replace ->encrpt ->user
 		user.setPassword(encoder.encode(user.getPassword()));
-		//user taklela password incript zala ani tu user password madhe convert
+		//user taklela password incript zala ani to user password madhe convert
 		int v=userRepo.save(user);  //101 ram encript from 
 		if(v>0)
 		{

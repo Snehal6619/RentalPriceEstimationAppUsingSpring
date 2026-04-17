@@ -97,7 +97,7 @@ footer {
 				
 				 <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
   <i class="fa-solid fa-house text-warning me-2 fs-4"></i>
-  <span class="fs-5">RentPredictApp</span>
+  <span class="fs-5">RentPredict</span>
 </a>
 
 				<button class="navbar-toggler" type="button"

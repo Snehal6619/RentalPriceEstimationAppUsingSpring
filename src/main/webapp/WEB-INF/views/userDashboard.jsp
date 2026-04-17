@@ -23,7 +23,7 @@ if (user == null) {
 
 /* 🔥 BACKGROUND IMAGE */
 body {
-    background: url("https://images.unsplash.com/photo-1560518883-ce09059eeffa") no-repeat center center/cover;
+    background: url("https://images.unsplash.com/photo-1560448204-e02f11c3d0e2") no-repeat center center/cover;
     min-height: 100vh;
     position: relative;
 }

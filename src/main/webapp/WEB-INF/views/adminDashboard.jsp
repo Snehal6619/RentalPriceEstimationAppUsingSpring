@@ -17,6 +17,217 @@ if (user == null) {
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet" />
+	<style type="text/css">
+	
+/* Center the Add Property form */
+#addForm .container {
+    background-color: rgba(0, 0, 0, 0.7); /* dark overlay for readability */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    max-width: 600px;  /* optional, keep form compact */
+    margin: 50px auto; /* centers horizontally */
+}
+
+body {
+    background: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c") no-repeat center center/cover;
+    position: relative;
+    color: white;
+}
+
+/* Dark overlay so text is readable */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 0;
+}
+
+/* Keep all content above overlay */
+.container-fluid,
+.navbar,
+.col-md-9,
+.col-md-3,
+.section,
+.modal-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Glassy Sidebar Matching Home/Login Theme */
+.col-md-3 {
+    background: rgba(255, 255, 255, 0.15); /* semi-transparent glass */
+    backdrop-filter: blur(12px);           /* blur effect like login card */
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Sidebar heading and marquee */
+.col-md-3 h5 {
+    text-align: center;
+    color: #00c6ff; /* gradient blue highlight */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.col-md-3 marquee {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #00c6ff;
+    margin-bottom: 15px;
+}
+
+/* Buttons inside sidebar */
+.col-md-3 .btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.6);
+}
+
+/* Hover effect for buttons */
+.col-md-3 .btn:hover {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    border-color: #00c6ff;
+    color: white;
+}
+
+/* Logout button matching dashboard / home theme */
+.navbar .btn-danger {
+    background: linear-gradient(to right, #00c6ff, #0072ff); /* blue gradient */
+    border: 2px solid #00c6ff;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+.navbar .btn-danger:hover {
+    background: linear-gradient(to right, #0072ff, #00c6ff); /* reverse gradient */
+    box-shadow: 0 5px 15px rgba(0,198,255,0.5);
+    transform: translateY(-2px);
+}
+
+/* Sidebar background stays glassy */
+.col-md-3 {
+    background: rgba(255, 255, 255, 0.15); /* glass effect */
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    border: 1px solid black; /* black border */
+}
+
+/* Sidebar heading */
+.col-md-3 h5 {
+    text-align: center;
+    color: black; /* black text */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Marquee inside sidebar */
+.col-md-3 marquee {
+    font-size: 1rem;
+    font-weight: bold;
+    color: black; /* black text */
+    margin-bottom: 15px;
+}
+
+/* Buttons inside sidebar */
+.col-md-3 .btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s;
+    color: black; /* button text black */
+    border: 2px solid black; /* black border */
+}
+
+/* Hover effect for buttons */
+.col-md-3 .btn:hover {
+    background: linear-gradient(to right, #00c6ff, #0072ff); /* gradient on hover */
+    color: white; /* text becomes white on hover */
+    border-color: #00c6ff;
+}
+
+/* Logout button style */
+.navbar .btn-danger {
+    background: linear-gradient(to right, #00c6ff, #0072ff); /* blue gradient */
+    border: 2px solid #00c6ff;
+    color: black;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+.navbar .btn-danger:hover {
+    background: linear-gradient(to right, #0072ff, #00c6ff); /* reverse gradient */
+    box-shadow: 0 5px 15px rgba(0,198,255,0.5);
+    transform: translateY(-2px);
+}
+
+/* Add State Form Styling */
+#addState .card {
+    background: rgba(0, 0, 0, 0.85); /* black with slight transparency */
+    border-radius: 20px;
+    color: white; /* default text inside card */
+}
+
+#addState .form-label {
+    color: #ffffff !important; /* labels white */
+    font-weight: 500;
+}
+
+/* Add City Form Styling */
+#addcity .card {
+    background: rgba(0, 0, 0, 0.85); /* black with slight transparency */
+    border-radius: 20px;
+    color: white; /* default text inside card */
+}
+
+#addcity .form-label {
+    color: #ffffff !important; /* labels white */
+    font-weight: 500;
+}
+
+/* Add Location Form Styling */
+#addloc .card {
+    background: rgba(0, 0, 0, 0.85); /* black with slight transparency */
+    border-radius: 20px;
+    color: white; /* default text inside card */
+}
+
+#addloc .form-label {
+    color: #ffffff !important; /* labels white */
+    font-weight: 500;
+}
+
+/* Optional: inputs match dark theme */
+#addloc .form-control, 
+#addloc .form-select {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#addloc .form-control:focus,
+#addloc .form-select:focus {
+    border-color: #00c6ff;
+    box-shadow: 0 0 8px #00c6ff;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+</style>
+	
 </head>
 <body class="bg-dark text-light">
 	<!-- Navbar -->
@@ -54,7 +265,7 @@ if (user == null) {
 						onclick="showSection('displayInquery');displayInquery();">View
 						Inquiry</button>
 						
-					<a class="btn btn-danger mt-5" href="logout">Log Out</a>
+					<a class="btn btn-danger mt-5" href="logout">Logout</a>
 				</div>
 			</div>
 			<!-- Main Content -->

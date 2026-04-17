@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home page</title>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -85,7 +85,11 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="#">RentPredict</a>
+        
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+  <i class="fa-solid fa-house text-warning me-2 fs-4"></i>
+  <span class="fs-5">RentPredictApp</span>
+</a>
 
         <button
           class="navbar-toggler"
@@ -135,7 +139,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4">
-            <h5>RentPredict</h5>
+            <h5>RentPredictApp</h5>
             <p>
               Rental Price Estimation System helps users predict property rental
               prices using property data and machine learning techniques.

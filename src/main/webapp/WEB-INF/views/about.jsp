@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About - Rental Price Estimation</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -14,7 +16,7 @@
 
     <style>
       body {
-        background: url("https://images.unsplash.com/photo-1560448204-e02f11c3d0e2") no-repeat center center/cover;
+        background:url("https://images.unsplash.com/photo-1560448204-e02f11c3d0e2") no-repeat center center/cover;
         position: relative;
       }
 
@@ -53,7 +55,11 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="home">RentPredictApp</a>
+       
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+  <i class="fa-solid fa-house text-warning me-2 fs-4"></i>
+  <span class="fs-5">RentPredictApp</span>
+</a>
 
         <button
           class="navbar-toggler"
